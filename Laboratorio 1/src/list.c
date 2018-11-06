@@ -1,7 +1,5 @@
 # include "../include/list.h"
-/*	Función que inicializa una List. Esta funciona igual que una lista.
-	return: Puntero a List
-*/ 
+
 list* initList()
 {
 	list* myList = (list*)malloc(sizeof(list));
@@ -10,7 +8,6 @@ list* initList()
 	return myList;
 }
 
-/*	Procedimiento que agrega un elemento a la lista List. Agrega el elemento al final de la lista. */
 void append(list* _list, box element)
 {
 	if(_list->size == 0)
@@ -25,9 +22,7 @@ void append(list* _list, box element)
 	}
 	_list->size++;
 }
-/*	Procedimiento que saca el útimo valor de la lista.
-	return: Último elemento de la lista,
-*/
+
 box pop(list* _list)
 {
 	int max = _list->size - 1;
@@ -44,15 +39,19 @@ box pop(list* _list)
 
 void showList(list* _list)
 {
+	printf("__________________________________________________________________\n");
 	printf("Size of list: %i\n", _list->size);
 	if(_list->size != 0)
 	{
 		int i;
 		for (i = 0; i < _list->size; ++i)
 		{
-			printf("Elemento %i | Inversion: %i | Beneficio: %i\n", i+1, _list->content[i].inversion, _list->content[i].benefit);
+			printf("|%12s: %3i |", "Elemento n°", i+1);
+			printf("%12s: %7i |", "Inversion" , _list->content[i].inversion);
+			printf("%12s: %7i |\n", "Beneficio", _list->content[i].benefit);
 		}
 	}
+	printf("__________________________________________________________________\n");
 }
 
 

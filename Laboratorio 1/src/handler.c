@@ -1,7 +1,5 @@
 # include "../include/handler.h"
-/* Función que verifica si un archivo existe en el directorio. 
-   name: Nombre del arrchivo (con extensión) que se quiere buscar en el directorio. 
-   return: Puntero al archivo.. */
+
 FILE* inDirectory(char* name)
 {
 	char* route = (char*)calloc(60, sizeof(char));
@@ -74,7 +72,19 @@ int** makeCombinatory(int size)
     return matrix;
 }
 
-void bruteForce(int capital, int capacity, list* elements)
+void printCurrent(knapsack* ks, int i)
+{
+    //#ifdef DEBUG
+    printf("Enter para continuar...\n");
+    while(getchar() != '\n')
+    {
+        printf("Analizando combinacion %i\n", i);
+        showKnapsack(ks);
+    }
+    //#endif   
+}
+
+knapsack* bruteForce(int capital, int capacity, list* elements)
 {
     int optimum = 0;
     int indexOpt = 0;
@@ -93,6 +103,8 @@ void bruteForce(int capital, int capacity, list* elements)
             optimum = kss[i]->benefits;
             indexOpt = i;
         }
+        printCurrent(kss[i], i);
     }
     showKnapsack(kss[indexOpt]);
+    return kss[indexOpt];
 }

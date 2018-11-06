@@ -1,4 +1,5 @@
 # include "../include/knapsack.h"
+
 knapsack* initMyKnapsack(int _capital, int _capacity)
 {
 	knapsack* ks = (knapsack*)malloc(sizeof(knapsack));
@@ -38,6 +39,7 @@ void add(knapsack* _ks, box element)
 
 void showKnapsack(knapsack* _knapsack)
 {
+	printf("__________________________________________________________________\n");
 	printf("Capital: %i\n", _knapsack->capital);
 	printf("Capacity: %i\n", _knapsack->capacity);
 	printf("Benefits: %i\n", _knapsack->benefits);
@@ -47,7 +49,10 @@ void showKnapsack(knapsack* _knapsack)
 		printf("Content:\n");
 		for (i = 0; i < _knapsack->size; ++i)
 		{
-			printf("Elemento %i | Inversion: %i | Beneficio: %i\n", i+1, _knapsack->boxes[i].inversion, _knapsack->boxes[i].benefit);
+			printf("|%12s: %3i |", "Elemento n°", i+1);
+			printf("%12s: %7i |", "Inversion" , _knapsack->boxes[i].inversion);
+			printf("%12s: %7i |\n", "Beneficio", _knapsack->boxes[i].benefit);
+			//printf("Elemento %i | Inversion: %i | Beneficio: %i\n", i+1, _knapsack->boxes[i].inversion, _knapsack->boxes[i].benefit);
 		}
 	}
 	else
@@ -56,4 +61,5 @@ void showKnapsack(knapsack* _knapsack)
 		printf("Success!\n");
 	else
 		printf("Failed, this combination doesn't satisfy the conditions\n");
+	printf("__________________________________________________________________\n");
 }
