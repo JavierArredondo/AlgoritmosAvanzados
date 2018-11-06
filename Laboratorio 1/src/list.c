@@ -9,6 +9,7 @@ list* initList()
 	myList->content = NULL;
 	return myList;
 }
+
 /*	Procedimiento que agrega un elemento a la lista List. Agrega el elemento al final de la lista. */
 void append(list* _list, box element)
 {
@@ -36,7 +37,7 @@ box pop(list* _list)
 		return initBox(-1, -1);;
 	}
 	box aux = _list->content[max];
-	_list->content = (int*)realloc(_list->content, (max - 1) * sizeof(int));
+	_list->content = (box*)realloc(_list->content, (max - 1) * sizeof(box));
 	_list->size = max;
 	return aux;
 }
@@ -49,7 +50,7 @@ void showList(list* _list)
 		int i;
 		for (i = 0; i < _list->size; ++i)
 		{
-			printf("Elemento %i | Inversion: %i | Beneficio: %i\n", i+1, _list->content[i].size, _list->content[i].value);
+			printf("Elemento %i | Inversion: %i | Beneficio: %i\n", i+1, _list->content[i].inversion, _list->content[i].benefit);
 		}
 	}
 }

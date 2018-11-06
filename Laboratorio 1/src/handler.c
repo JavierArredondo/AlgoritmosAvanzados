@@ -28,100 +28,71 @@ list* getInversions(FILE* _file)
 	while(!feof(_file))
 	{
 		box _box = initBox(0, 0);
-		fscanf(_file, "%i", &_box.size);
-		fscanf(_file, "%i", &_box.value);
+		fscanf(_file, "%i", &_box.inversion);
+		fscanf(_file, "%i", &_box.benefit);
 		append(_list, _box);
-
 	}
 	fclose(_file);
 	return _list;
 }
 
-void bruteForce(knapsack* _knapsack, list* _list)
+int allInKnapsack(knapsack* ks, list* elements)
 {
-	printf("brute force\n");
-	int n = _list->size;
-	int w = _knapsack->capacity;
-	int *mm = calloc((w + 1 ) * (n + 1), sizeof(int)); /*Combinaciones posibles*/
-	int **m = malloc((n + 1) * sizeof(int*));
-	m[0] = mm;
-	int i, j, a, b;
-	for(i = 1; i <= n; i++)
-	{
-		m[i] = &mm[i * (w + 1)];
-		for (j = 0; j <= w; j++)
-		{
-			if(_list->content[i - 1].size > j)
-				m[i][j] = m[i - 1][j];
-			else
-			{
-				a = m[i - 1][j];
-                b = m[i - 1][j - _list->content[i - 1].size] + _list->content[i - 1].value;
-                m[i][j] = a > b ? a : b;
-			}
-		}
-	}
-	int *s = calloc(n, sizeof (int));
-    for (i = n, j = w; i > 0; i--) {
-        if (m[i][j] > m[i - 1][j]) {
-            s[i - 1] = 1;
-            j -= _list->content[i - 1].size;
-        }
-    }
-    int tw = 0, tv = 0;
-    for (i = 0; i < n; i++) {
-        if (s[i]) {
-            printf("%5d %5d\n", _list->content[i].size, _list->content[i].value);
-            tw += _list->content[i].size;
-            tv += _list->content[i].value;
-        }
-    }
-    printf("%-22s %5d %5d\n", "totals:", tw, tv);
-}
-
-/*
-int *knapsack (item_t *items, int n, int w) {
-    int i, j, a, b, *mm, **m, *s;
-    mm = calloc((n + 1) * (w + 1), sizeof (int));
-    m = malloc((n + 1) * sizeof (int *));
-    m[0] = mm;
-    for (i = 1; i <= n; i++) {
-        m[i] = &mm[i * (w + 1)];
-        for (j = 0; j <= w; j++) {
-            if (items[i - 1].weight > j) {
-                m[i][j] = m[i - 1][j];
-            }
-            else {
-                a = m[i - 1][j];
-                b = m[i - 1][j - items[i - 1].weight] + items[i - 1].value;
-                m[i][j] = a > b ? a : b;
-            }
-        }
-    }
-    s = calloc(n, sizeof (int));
-    for (i = n, j = w; i > 0; i--) {
-        if (m[i][j] > m[i - 1][j]) {
-            s[i - 1] = 1;
-            j -= items[i - 1].weight;
-        }
-    }
-    free(mm);
-    free(m);
-    return s;
-}
- 
-int main () {
-    int i, n, tw = 0, tv = 0, *s;
-    n = sizeof (items) / sizeof (item_t);
-    s = knapsack(items, n, 400);
-    for (i = 0; i < n; i++) {
-        if (s[i]) {
-            printf("%-22s %5d %5d\n", items[i].name, items[i].weight, items[i].value);
-            tw += items[i].weight;
-            tv += items[i].value;
-        }
-    }
-    printf("%-22s %5d %5d\n", "totals:", tw, tv);
+    int total = 0;
+    for (int i = 0; i < elements->size; i++)
+        total = total + elements->content[i].inversion;
+    if(total <= ks->capacity)
+        return 1;
     return 0;
 }
-*/
+
+int myPow(int base, int exp)
+{
+    int res = 1;
+    for (int i = 0; i < exp; i++)
+        res = res * base;
+    return res;
+}
+
+int* toBin(int number, int longi)
+{
+    int* aux = (int*)calloc(longi, sizeof(int));
+    for (int i = 0; i < longi; i++)
+    {
+        aux[i] =  number % 2;;
+        number = number/2; 
+    }
+    return aux;
+}
+
+int** makeCombinatory(int size)
+{
+    int posibles = myPow(2, size); /* Combinaciones posibles.*/
+    int** matrix = (int**)malloc(sizeof(int*) * posibles);
+    for (int i = 0; i < posibles; i++)
+        matrix[i] = toBin(i, size);
+    return matrix;
+}
+
+void bruteForce(int capital, int capacity, list* elements)
+{
+    int optimum = 0;
+    int indexOpt = 0;
+    int posibles = myPow(2, elements->size);
+    int** matrix = makeCombinatory(elements->size);
+    knapsack** kss = initVeryKnapsack(capital, capacity, posibles);
+    for (int i = 0; i < posibles; i++)
+    {
+        for (int j = 0; j < elements->size; j++)
+        {
+            if(matrix[i][j])
+                add(kss[i], elements->content[j]);
+        }
+        if(kss[i]->capacity >= 0 && kss[i]->capital >= 0 && kss[i]->benefits > optimum)
+        {
+            optimum = kss[i]->benefits;
+            indexOpt = i;
+        }
+    }
+    showKnapsack(kss[indexOpt]);
+}

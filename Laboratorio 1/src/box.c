@@ -1,7 +1,7 @@
 # include "../include/box.h"
-box initBox(int _size, int _value){
+box initBox(int _inversion, int _benfit){
 	box _box;
-	_box.size = _size;   // inversion
-	_box.value = _value; // beneficio
+	_box.inversion = _inversion;   // inversion
+	_box.benefit = _benfit; // beneficio
 	return _box;
 }

@@ -9,6 +9,9 @@ FILE* inDirectory(char* name);
 knapsack* getKnapsack(FILE* _file);
 list* getInversions(FILE* _file);
 void writeOutput();
-void bruteForce(knapsack* _knapsack, list* _list);
+int allInKnapsack(knapsack* ks, list* elements);
+void bruteForce(int _capital, int _capacity, list* _list);
+int myPow(int base, int exp);
+int** makeCombinatory(int n);
 
 # endif

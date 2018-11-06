@@ -2,8 +2,8 @@
 # define BOX_H
 typedef struct box /* Structure used to store inversions.*/
 {
-	int size; 
-	int value;
+	int inversion; 
+	int benefit;
 } box;
 
 box initBox(int _size, int _value);
