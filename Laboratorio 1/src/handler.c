@@ -78,9 +78,12 @@ void printCurrent(knapsack* ks, int i)
     printf("Enter para continuar...\n");
     while(getchar() != '\n')
     {
-        printf("Analizando combinacion %i\n", i);
-        showKnapsack(ks);
+        printf("Tecla errónea...\n");
     }
+    system("clear");
+    printf("________________________________________________________________\n");
+    printf("Analizando combinacion %i\n", i+1);
+    showKnapsack(ks);
     //#endif   
 }
 
@@ -102,6 +105,7 @@ knapsack* bruteForce(int capital, int capacity, list* elements)
         {
             optimum = kss[i]->benefits;
             indexOpt = i;
+            printf("Es el optimo\n");
         }
         printCurrent(kss[i], i);
     }
