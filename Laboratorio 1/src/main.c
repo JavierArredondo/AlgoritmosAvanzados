@@ -1,4 +1,8 @@
-# include "handler.h"
+# include "box.c"
+# include "list.c"
+# include "knapsack.c"
+# include "handler.c"
+
 
 # define ANSI_COLOR_RED "\x1b[31m"
 # define ANSI_COLOR_GREEN "\x1b[32m"
