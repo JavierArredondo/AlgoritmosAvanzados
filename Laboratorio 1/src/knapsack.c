@@ -1,5 +1,11 @@
 # include "../include/knapsack.h"
 
+# define ANSI_COLOR_RED "\x1b[31m"
+# define ANSI_COLOR_GREEN "\x1b[32m"
+# define ANSI_COLOR_YELLOW "\x1b[33m"
+# define ANSI_COLOR_RESET "\x1b[0m"
+# define ANSI_COLOR_CYAN "\x1b[36m"
+
 knapsack* initMyKnapsack(int _capital, int _capacity)
 {
 	knapsack* ks = (knapsack*)malloc(sizeof(knapsack));
@@ -39,27 +45,27 @@ void add(knapsack* _ks, box element)
 
 void showKnapsack(knapsack* _knapsack)
 {
-	printf("__________________________________________________________________\n");
-	printf("Capital: %i\n", _knapsack->capital);
-	printf("Capacity: %i\n", _knapsack->capacity);
-	printf("Benefits: %i\n", _knapsack->benefits);
+	printf("|――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――|\n");
+	printf("| > Capital:            %10i                               |\n", _knapsack->capital);
+	printf("| > Capacidad restante: %10i                               |\n", _knapsack->capacity);
+	printf("| > Beneficio total:    %10i                               |\n", _knapsack->benefits);
 	if(_knapsack->boxes)
 	{
 		int i;
-		printf("Content:\n");
+		printf("|―contenido――――――――――――――――――――――――――――――――――――――――――――――――――――――|\n");
 		for (i = 0; i < _knapsack->size; ++i)
 		{
 			printf("|%12s: %3i |", "Elemento n°", i+1);
 			printf("%12s: %7i |", "Inversion" , _knapsack->boxes[i].inversion);
-			printf("%12s: %7i |\n", "Beneficio", _knapsack->boxes[i].benefit);
+			printf("%12s: %7i  |\n", "Beneficio", _knapsack->boxes[i].benefit);
 			//printf("Elemento %i | Inversion: %i | Beneficio: %i\n", i+1, _knapsack->boxes[i].inversion, _knapsack->boxes[i].benefit);
 		}
 	}
 	else
-		printf("Knapsack empty!\n");
+		printf("| > Conjunto vacio                                               |\n");
 	if(_knapsack->capacity >= 0 && _knapsack->capital >= 0)
-		printf("Success!\n");
+		printf(ANSI_COLOR_GREEN"| > Cumple con los requisitos basicos!                           |\n"ANSI_COLOR_RESET);
 	else
-		printf("Failed, this combination doesn't satisfy the conditions\n");
-	printf("__________________________________________________________________\n");
+		printf(ANSI_COLOR_RED"| > Fallo, no cumple con los requisitos                          |\n"ANSI_COLOR_RESET);
+	printf(" ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― \n");
 }

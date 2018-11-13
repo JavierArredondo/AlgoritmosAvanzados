@@ -1,4 +1,9 @@
 # include "../include/handler.h"
+# define DEBUG
+# define ANSI_COLOR_GREEN "\x1b[32m"
+# define ANSI_COLOR_YELLOW "\x1b[33m"
+# define ANSI_COLOR_RESET "\x1b[0m"
+# define ANSI_COLOR_CYAN "\x1b[36m"
 
 FILE* inDirectory(char* name)
 {
@@ -74,17 +79,16 @@ int** makeCombinatory(int size)
 
 void printCurrent(knapsack* ks, int i)
 {
-    //#ifdef DEBUG
-    printf("Enter para continuar...\n");
+    #ifdef DEBUG
+    printf("\nEnter para continuar...\n");
     while(getchar() != '\n')
     {
         printf("Tecla errónea...\n");
     }
-    system("clear");
-    printf("________________________________________________________________\n");
-    printf("Analizando combinacion %i\n", i+1);
+    printf(" ________________________________________________________________\n");
+    printf("|Analizando combinacion %4i                                     |\n", i+1);
     showKnapsack(ks);
-    //#endif   
+    #endif   
 }
 
 knapsack* bruteForce(int capital, int capacity, list* elements)
@@ -105,10 +109,29 @@ knapsack* bruteForce(int capital, int capacity, list* elements)
         {
             optimum = kss[i]->benefits;
             indexOpt = i;
-            printf("Es el optimo\n");
+            printf(ANSI_COLOR_CYAN" ^ Es el nuevo optimo ^\n"ANSI_COLOR_RESET);
         }
         printCurrent(kss[i], i);
     }
+    printf("\nLa combinacion que se adecua a los criterios de optimizacion es la combinacion %i\n", indexOpt);
     showKnapsack(kss[indexOpt]);
     return kss[indexOpt];
+}
+
+void writeOutput(knapsack* ks, char* filename)
+{
+    char* route = (char*)calloc(70, sizeof(char));
+    strcat(route, "./output/");
+    strcat(route, filename);
+    strcat(route, ".out");
+    FILE* myFile = NULL;
+    myFile = fopen(route, "w");
+    int k0 = 0;
+    for (int i = 0; i < ks->size; i++)
+        k0 = k0 + ks->boxes[i].inversion;
+    fprintf(myFile, "%i %i\n", k0, ks->benefits);
+    for (int i = 0; i < ks->size; i++)
+        fprintf(myFile, "%i\n", ks->boxes[i].inversion);
+    fclose(myFile);
+    printf(" > Archivo guardado con exito en la carpeta output.\n");
 }

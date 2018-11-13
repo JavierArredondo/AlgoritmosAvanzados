@@ -67,5 +67,5 @@ Brute force for knapsack's algorithm.
 */
 knapsack* bruteForce(int _capital, int _capacity, list* _list);
 
-void writeOutput();
+void writeOutput(knapsack* _ks, char* filename);
 # endif

@@ -39,19 +39,19 @@ box pop(list* _list)
 
 void showList(list* _list)
 {
-	printf("__________________________________________________________________\n");
-	printf("Size of list: %i\n", _list->size);
+	printf(" _______________________________________________________________\n");
+	printf("|Cantidad de elementos en la lista: %i                           |\n", _list->size);
 	if(_list->size != 0)
 	{
 		int i;
 		for (i = 0; i < _list->size; ++i)
 		{
-			printf("|%12s: %3i |", "Elemento n°", i+1);
+			printf("|%12s: %3i |", "Elemento N°", i+1);
 			printf("%12s: %7i |", "Inversion" , _list->content[i].inversion);
 			printf("%12s: %7i |\n", "Beneficio", _list->content[i].benefit);
 		}
 	}
-	printf("__________________________________________________________________\n");
+	printf(" ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n");
 }
 
 
