@@ -1,8 +1,9 @@
-# include "route.h"
-# include "graph.h"
 # include "handler.h"
+
 int main(int argc, char const *argv[])
 {
-	printf("Hola\n");
+	FILE* file = inDirectory("entrada.in");
+	graph* myGraph = readGraph(file);
+	showGraph(myGraph);
 	return 0;
 }
