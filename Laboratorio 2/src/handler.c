@@ -11,3 +11,6 @@ FILE* inDirectory(char* name)
 		return NULL;
 	return myFile;
 }
+
+
+
