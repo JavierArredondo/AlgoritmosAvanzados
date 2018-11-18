@@ -4,7 +4,6 @@ graph* initGraph(int q)
 {
 	graph* myGraph = (graph*)malloc(sizeof(graph));
 	myGraph->qty = q;
-	q++;
 	myGraph->ady = (int**)malloc(sizeof(int*) * q);
 	for (int i = 0; i < q; i++)
 		myGraph->ady[i] = (int*)calloc(q, sizeof(int));
@@ -27,7 +26,7 @@ graph* readGraph(FILE* file)
 {
 	int aux;
 	fscanf(file, "%i", &aux);
-	graph* myGraph = initGraph(aux);
+	graph* myGraph = initGraph(aux+1);
 	int o, d, p;
 	while(!feof(file))
 	{

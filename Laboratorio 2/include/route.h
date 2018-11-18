@@ -18,4 +18,6 @@ int pop(route* myRoute);
 
 void showRoute(route* myRoute);
 
+int inRoute(int n, route* myRoute);
+
 # endif

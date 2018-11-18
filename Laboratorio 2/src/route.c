@@ -44,3 +44,13 @@ void showRoute(route* myRoute)
 			printf("%i ", myRoute->sequence[i]);
 	}
 }
+
+int inRoute(int n, route* myRoute)
+{
+	if(myRoute->size == 0)
+		return 0;
+	for (int i = 0; i < myRoute->size; i++)
+		if(n == myRoute->sequence[i])
+			return 1;
+	return 0;
+}
