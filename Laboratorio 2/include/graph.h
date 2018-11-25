@@ -17,4 +17,6 @@ graph* readGraph(FILE* file);
 
 void showGraph(graph* g);
 
+int getWeight(int x, int y, graph* g);
+
 # endif

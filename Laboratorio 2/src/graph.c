@@ -21,6 +21,11 @@ void putNode(graph* myGraph, int origin, int destinity, int weight)
 	myGraph->ady[destinity][0] = 1;
 }
 
+int getWeight(int x, int y, graph* g)
+{
+	return g->ady[x][y];
+}
+
 
 graph* readGraph(FILE* file)
 {

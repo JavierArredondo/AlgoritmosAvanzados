@@ -13,6 +13,10 @@ For verify if the file exists.
  */
 FILE* inDirectory(char* filename);
 /**/
-route* backTracking(graph* myGraph, route* optRoute, route* auxRoute);
+int isSolution(route* myRoute, graph* myGraph);
+/**/
+int isPosible(route* myRoute, graph* myGraph, int o, int d);
+/**/
+route backTracking(graph* myGraph, route* myRoute, route* opt);
 
 # endif
