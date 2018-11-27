@@ -1,5 +1,6 @@
 # include "../include/handler.h"
 
+
 FILE* inDirectory(char* name)
 {
 	char* route = (char*)calloc(60, sizeof(char));
@@ -16,68 +17,44 @@ int isSolution(route* myRoute, graph* myGraph)
 {
 	if(!myRoute)
 		return 0;
-	if(myRoute->size == myGraph->qty)
-	{
-		printf("Solo falta volver:\n");
+	if(myRoute->size == myGraph->qty+1)
 		return 1;
-	}
 	return 0;
 }
 
 int isPosible(route* myRoute, graph* myGraph, int o, int d)
 {
 	if(o != d && inRoute(o, myRoute) && !inRoute(d, myRoute))
-	{
-		int w = getWeight(o, d, myGraph);
-		printf("Ruta con: %i -> %i con %i\n", o, d, w);
-		add(d, w, myRoute);
 		return 1;
-	}
-	else
-		printf("Imposible %i -> %i\n", o, d);
+	else if(myGraph->qty == myRoute->size && d == 0)
+		return 1;
 	return 0;
 }
 
-
-route* backTracking(graph* myGraph, route* myRoute, route* opt)
+route* backTracking(graph* myGraph, route* myRoute)
 {
-	/*if(isSolution(auxRoute, myGraph))
-		return auxRoute;
-	int origin, destiny;
-	for (origin = 0; origin < myGraph->qty; origin++)
-	{
-		for (destiny = 0; destiny < myGraph->qty; destiny++)
-		{
-			if(isPosible(auxRoute, myGraph, origin, destiny))
-			{
-				auxRoute = backTracking(myGraph, optRoute, auxRoute);
-				if(auxRoute != NULL)
-					return auxRoute;
-			}
-		}
-	}*/
 	if(isSolution(myRoute, myGraph) == 1)
 	{
-		opt = makeCopy(myRoute);
-		return opt;
-	}
+		if(myRoute->cost < optRoute->cost || optRoute->cost == 0)
+			optRoute = makeCopy(myRoute);
 
-	int origin, destiny;
-	for (origin = getCurrent(myRoute); origin < myGraph->qty; origin++)
+	}
+	else if(optRoute->cost == 0 || myRoute->cost < optRoute->cost)
 	{
+		int origin = getCurrent(myRoute);
+		int destiny;
 		for (destiny = 0; destiny < myGraph->qty; destiny++)
 		{
-			printf("%i__________%i\n", origin, destiny);
+			int weight = getWeight(origin, destiny, myGraph);
 			if(isPosible(myRoute, myGraph, origin, destiny))
 			{
-				showRoute(myRoute);
-				myRoute = backTracking(myGraph, myRoute, opt);
-				//if(myRoute != NULL)
-				//	return myRoute;
+				add(destiny, weight, myRoute);
+				backTracking(myGraph, myRoute);
 			}
-		}	
+		}
 	}
-	return NULL;
+	pop(myRoute);
+	return myRoute;
 }
 
 

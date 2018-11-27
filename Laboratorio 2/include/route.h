@@ -9,6 +9,7 @@ typedef struct route
 	int size;
 	int cost;
 	int* sequence;
+	int* weights;
 } route;
 
 route* initRoute();
@@ -26,4 +27,6 @@ int getCurrent(route* myRoute);
 int getSize(route* myRoute);
 
 route* makeCopy(route* myRoute);
+
+route* comeback(route* myRoute, int n);
 # endif
