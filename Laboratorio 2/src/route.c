@@ -49,17 +49,21 @@ void showRoute(route* myRoute)
 	{
 		printf("NULL\n");
 	}
-	printf("Costo: %i\n", myRoute->cost);
+	printf("┃ Costo total: %i\n", myRoute->cost);
 	if(myRoute->size != 0)
 	{
+		printf("┃");
 		for (int i = 0; i < myRoute->size; i++)
-			printf("%i->", myRoute->sequence[i]);
-		printf("\n");
+		{
+			printf("%2i", myRoute->sequence[i]);
+			if(i != myRoute->size - 1)
+				 printf(" %2s ", "->");
+		}
+		printf("\n┃");
 		for (int i = 0; i < myRoute->size - 1; i++)
-			printf("  %i", myRoute->weights[i]);
-
+			printf("   %2i ", myRoute->weights[i]);
+		printf("\n");
 	}
-	printf("\n");
 }
 
 int inRoute(int n, route* myRoute)

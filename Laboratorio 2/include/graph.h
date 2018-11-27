@@ -6,9 +6,8 @@
 
 typedef struct graph
 {
-	int** ady; 
-	int* nodes;
-	int qty;
+	int** ady; // Matrix of ady
+	int qty;   // Total nodes
 } graph;
 
 graph* initGraph(int q);
