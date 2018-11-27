@@ -70,6 +70,6 @@ int main(int argc, char const *argv[])
 	}
 	while(option==1);
 
-	printf("\n Saludos desde marte!\n");
+	printf("\n Saludos desde marte, terricola!\n");
 	return 0;
 }
