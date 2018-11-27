@@ -1,3 +1,3 @@
-# Algoritmos Avanzados - Laboratorio 1
+# Algoritmos Avanzados - Laboratorio 2
 
-## Fuerza Bruta
+## Backtracking
