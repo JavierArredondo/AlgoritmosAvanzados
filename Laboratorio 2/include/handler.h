@@ -42,7 +42,7 @@ Procedure that make backTracking in the graph
 @params myGraph: Es el grafo en el que se encuentra el mapa de la ciudad.
 		myRoute: Es la ruta auxiliar en la cual se trabajará la recursión.
 */
-route* backTracking(graph* myGraph, route* myRoute);
+route* backTracking(graph* myGraph, route* myRoute, int show);
 
 /*
 Function that write the output file.

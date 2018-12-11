@@ -31,12 +31,13 @@ void instructions()
 	printf(ANSI_COLOR_GREEN"\t> Desarrollado por Javier Arredondo.\n\n"ANSI_COLOR_RESET);
 }
 
-
+/* Main del programa: llamados a funciones de otros archivos...1313*/
 int main(int argc, char const *argv[])
 {
 	char inputFilename[40];
 	char outputFilename[40];
 	int option = 0;
+	int show = -1;
 	do
 	{
 		system("clear");
@@ -54,13 +55,20 @@ int main(int argc, char const *argv[])
 			scanf("%s", inputFilename);
 			_file = inDirectory(inputFilename);
 		}
+		printf(" ¿Quieres ver la traza de la solucion? (0: No | 1: Si)\n");
+		scanf("%i", &show);
+		printf("%i\n", show);
+		while(show != 1 && show != 0)
+		{
+			printf("Seleccion invalida.  ¿Quieres ver la traza de la solucion? (0: No | 1: Si)\n");	
+			scanf("%i", &show);
+		}
 		graph* myGraph = readGraph(_file);
 		showGraph(myGraph);
 		route* r = initRoute();
 		optRoute = initRoute();
 		add(0, 0, r);
-		backTracking(myGraph, r);
-
+		backTracking(myGraph, r, show);
 		printf("\n");
 		printf(" > ¿Con que nombre quieres guardar el archivo de salida (sin extension)?: \n");
 		scanf("%s", outputFilename);
