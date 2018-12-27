@@ -51,17 +51,19 @@ route* backTracking(graph* myGraph, route* myRoute, int show)
 		for (destiny = 0; destiny < myGraph->qty; destiny++)
 		{
 			int weight = getWeight(origin, destiny, myGraph);
-			if(!isPosible(myRoute, myGraph, origin, destiny) && show)
+			/*if(!isPosible(myRoute, myGraph, origin, destiny) && show)
 			{
 				printCurrent(myRoute, origin, destiny, weight, 0);
-			}
-			else
+			}*/
+			if(isPosible(myRoute, myGraph, origin, destiny))
 			{
 				add(destiny, weight, myRoute);
 				if(show)
 					printCurrent(myRoute, origin, destiny, weight, 1);
 				backTracking(myGraph, myRoute, show);
 			}
+			else if(show)
+				printCurrent(myRoute, origin, destiny, weight, 0);
 		}
 	}
 	pop(myRoute);
