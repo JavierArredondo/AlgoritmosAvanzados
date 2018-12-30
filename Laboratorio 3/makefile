@@ -12,7 +12,7 @@ obj/main.o: src/main.c
 obj/list.o: src/list.c
 	@ echo "src/list.c"
 	@ gcc  $(CFLAGS) $(INC_DIRS) src/list.c -o obj/list.o
-obj/list.o: src/option.c
+obj/option.o: src/option.c
 	@ echo "src/option.c"
 	@ gcc  $(CFLAGS) $(INC_DIRS) src/option.c -o obj/option.o
 obj/handler.o: src/handler.c

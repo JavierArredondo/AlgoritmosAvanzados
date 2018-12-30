@@ -39,30 +39,42 @@ int pop(list* _list)
 
 void showList(list* _list)
 {
-	printf("Cantidad de elementos en la lista: %i\n", _list->size);
 	if(_list->size != 0)
 	{
 		int i;
 		for (i = 0; i < _list->size; ++i)
 		{
-			printf("|%12s%3i: %2i |\n", "Elemento N°", i+1, _list->content[i]);
+			printf("%2i ", _list->content[i]);
+		}
+		printf("\n");
+	}
+}
+
+list* myRemove(int index, int index2, list* _list)
+{
+	list* aux = initList();
+	for (int i = 0; i < _list->size; i++)
+	{
+		if(i != index && i != index2)
+			append(aux, _list->content[i]);
+	}
+	_list->content = aux->content;
+	_list->size = aux->size;
+	return aux;
+}
+
+void bubbleSort(list* _list)
+{
+	for (int i = 1; i < _list->size; ++i)
+	{
+		for (int j = 0; j < _list->size-1; ++j)
+		{
+			if(_list->content[j] > _list->content[j+1])
+			{
+				int aux = _list->content[j];
+				_list->content[j] = _list->content[j+1];
+				_list->content[j+1] = aux;
+			}
 		}
 	}
 }
-
-int myRemove(int index, list* _list)
-{
-	list* aux = initList();
-	int number = -1;
-	for (int i = 0; i < _list->size; i++)
-	{
-		if(i != index)
-			append(aux, _list->content[i]);
-		else
-			number = _list->content[i];
-	}
-	_list = aux;
-	return number;
-}
-
-

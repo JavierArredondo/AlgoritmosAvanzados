@@ -13,6 +13,7 @@ list* initList(); /* Function to create the list.*/
 void append(list* _list, int element); /* Procedure to add a element at list.*/
 int pop(list* _list); /* Function to get the last element and delete this from de list.*/
 void showList(list* _list); /* Function to show list.*/
-int myRemove(int index, list* _list); /* Function to remove an element.*/ 
+list* myRemove(int index, int index2, list* _list); /* Function to remove an element.*/ 
+void bubbleSort(list* _list);
 
 # endif

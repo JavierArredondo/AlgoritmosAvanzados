@@ -18,6 +18,69 @@ FILE* inDirectory(char* name)
 	return myFile;
 }
 
+option* readFile(FILE* file)
+{
+    int qty;
+    fscanf(file, "%i", &qty);
+    option* options = (option*)malloc(sizeof(option) * qty);
+    for (int i = 0; i < qty; i++)
+    {
+        option o;
+        fscanf(file, "%i %i", &o.barrels, &o.consumption);
+        o.containers = initList();
+        o.qty = qty;
+        for (int j = 0; j < o.barrels; j++)
+        {
+            int aux;
+            fscanf(file, "%i", &aux);
+            append(o.containers, aux);
+        }
+        bubbleSort(o.containers);
+        options[i] = o;
+    }
+    fclose(file);
+    return options;
+}
+
+int* getOptimalLocal(list* _list, int goal)
+{
+    int* local = (int*)malloc(sizeof(int) * 2);
+    for (int i = 0; i < _list->size; i++)
+    {
+        for (int j = 1; j < _list->size; j++)
+        {
+            if(_list->content[i]+_list->content[j] >= goal)
+            {
+                local[0] = _list->content[i];
+                local[1] = _list->content[j];
+                _list = myRemove(i, j, _list);
+                return local;
+            }
+        }
+    }
+    return NULL;
+}
+
+void goloso(option* ops)
+{
+    int qty = ops[0].qty;
+    for (int i = 0; i < qty; i++)
+    {
+        printf("Caso %i\n", i+1);
+        int out = 0;
+        while(out == 0)     
+        {
+            showList(ops[i].containers);
+            int* opLocal = getOptimalLocal(ops[i].containers, ops[i].consumption);
+            printf("%i %i\n", opLocal[0], opLocal[1]);
+            showList(ops[i].containers);
+            out = 1;
+
+        }
+    }
+}
+
+
 /*void printCurrent(route* myRoute, int o, int d, int w, int p)
 {
 	#ifdef DEBUG

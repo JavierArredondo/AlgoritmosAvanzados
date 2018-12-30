@@ -31,12 +31,19 @@ void instructions()
 /* Main del programa: llamados a funciones de otros archivos...1313*/
 int main(int argc, char *argv[])
 {
-	int option = 0;
 	int show = -1;
 	system("clear");
 	title();
 	instructions();
+	if(argv[1] == NULL || argv[2] == NULL)
+	{
+		printf("Faltan los parametros de entrada.\n");
+		return -1;
+	}
 	FILE* _file = inDirectory(argv[1]);
+	option* set = readFile(_file);
+	showOptions(set);
+	goloso(set);
 	printf("\n Saludos desde marte, terricola!\n");
 	return 0;
 }

@@ -1,6 +1,8 @@
 # include <string.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include "option.h"
+# include "list.h"
 # ifndef HANDLER_H
 # define HANDLER_H
 
@@ -11,6 +13,19 @@ For verify if the file exists.
 @return: Pointer to file
  */
 FILE* inDirectory(char* filename);
+
+
+/*
+*/
+option* readFile(FILE* file);
+
+/*
+*/
+int* getOptimalLocal(list* _list, int goal);
+
+/*
+*/
+void goloso(option* ops);
 
 /*
 Function that write the output file.

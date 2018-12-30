@@ -10,7 +10,11 @@ typedef struct option
 	int barrels; /* Qty of barrels.*/
 	int consumption; /* Consumption of the plane.*/
 	list* containers; /* List of containers. */
+	int qty;
 } option;
 
+/*
+*/
+void showOptions(option* ops);
 
 # endif
