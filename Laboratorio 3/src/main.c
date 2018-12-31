@@ -41,9 +41,10 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 	FILE* _file = inDirectory(argv[1]);
+	FILE* output = openOutput(argv[2]);
 	option* set = readFile(_file);
 	showOptions(set);
-	goloso(set);
+	goloso(set, output);
 	printf("\n Saludos desde marte, terricola!\n");
 	return 0;
 }

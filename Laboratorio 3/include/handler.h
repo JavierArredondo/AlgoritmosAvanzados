@@ -14,6 +14,9 @@ For verify if the file exists.
  */
 FILE* inDirectory(char* filename);
 
+/*
+*/
+FILE* openOutput(char* name);
 
 /*
 */
@@ -25,14 +28,14 @@ int* getOptimalLocal(list* _list, int goal);
 
 /*
 */
-void goloso(option* ops);
+void goloso(option* ops, FILE* output);
 
 /*
 Function that write the output file.
 @params myRoute: route that will be write.
 	    filename: name of the file
 */
-void writeOutput();
+void writeOutput(list* solution, FILE* output);
 
 /* Function to debug*/
 void printCurrent();

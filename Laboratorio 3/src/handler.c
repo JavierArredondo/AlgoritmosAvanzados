@@ -18,6 +18,16 @@ FILE* inDirectory(char* name)
 	return myFile;
 }
 
+FILE* openOutput(char* name)
+{
+    char* route = (char*)calloc(70, sizeof(char));
+    strcat(route, "./output/");
+    strcat(route, name);
+    FILE* myFile = NULL;
+    myFile = fopen(route, "w");
+    return myFile;
+}
+
 option* readFile(FILE* file)
 {
     int qty;
@@ -47,7 +57,7 @@ int* getOptimalLocal(list* _list, int goal)
     int* local = (int*)malloc(sizeof(int) * 2);
     for (int i = 0; i < _list->size; i++)
     {
-        for (int j = 1; j < _list->size; j++)
+        for (int j = i+1; j < _list->size; j++)
         {
             if(_list->content[i]+_list->content[j] >= goal)
             {
@@ -61,27 +71,46 @@ int* getOptimalLocal(list* _list, int goal)
     return NULL;
 }
 
-void goloso(option* ops)
+void goloso(option* ops, FILE* output)
 {
     int qty = ops[0].qty;
     for (int i = 0; i < qty; i++)
     {
-        printf("Caso %i\n", i+1);
+        list* aux = initList();
         int out = 0;
         while(out == 0)     
         {
-            showList(ops[i].containers);
             int* opLocal = getOptimalLocal(ops[i].containers, ops[i].consumption);
-            printf("%i %i\n", opLocal[0], opLocal[1]);
-            showList(ops[i].containers);
-            out = 1;
-
+            if(!opLocal)
+                out = 1;
+            else
+            {
+                append(aux, opLocal[0]);
+                append(aux, opLocal[1]);
+            }
         }
+        writeOutput(aux, output);
     }
+    fclose(output);
+}
+
+void writeOutput(list* solution, FILE* output)
+{
+    int solutions = solution->size/2;
+    fprintf(output, "%i\n", solutions);
+    while(solution->size != 0)
+    {
+        showList(solution);
+        fprintf(output, "%i-%i ", solution->content[0], solution->content[1]);
+        if(solution->size != 2)
+            fprintf(output, "%s", "|| ");
+        solution = myRemove(0, 1, solution);
+    }
+    fprintf(output, "%s\n", "---");
 }
 
 
-/*void printCurrent(route* myRoute, int o, int d, int w, int p)
+void printCurrent(route* myRoute, int o, int d, int w, int p)
 {
 	#ifdef DEBUG
     printf("\n\n\nEnter para continuar...\n");
@@ -104,4 +133,4 @@ void goloso(option* ops)
     showRoute(optRoute);
     printf("┗━━\n");
     #endif  
-}*/
+}
