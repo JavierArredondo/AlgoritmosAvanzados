@@ -76,18 +76,21 @@ void goloso(option* ops, FILE* output)
     int qty = ops[0].qty;
     for (int i = 0; i < qty; i++)
     {
-        list* aux = initList();
+        list* aux = initList(); 
         int out = 0;
         while(out == 0)     
         {
             int* opLocal = getOptimalLocal(ops[i].containers, ops[i].consumption);
             if(!opLocal)
+            {
                 out = 1;
+            }
             else
             {
                 append(aux, opLocal[0]);
                 append(aux, opLocal[1]);
             }
+             printCurrent(ops[i].containers, opLocal, i, ops[i].consumption);
         }
         writeOutput(aux, output);
     }
@@ -100,17 +103,16 @@ void writeOutput(list* solution, FILE* output)
     fprintf(output, "%i\n", solutions);
     while(solution->size != 0)
     {
-        showList(solution);
         fprintf(output, "%i-%i ", solution->content[0], solution->content[1]);
         if(solution->size != 2)
             fprintf(output, "%s", "|| ");
         solution = myRemove(0, 1, solution);
     }
-    fprintf(output, "%s\n", "---");
+    fprintf(output, "\n%s\n", "---");
 }
 
 
-void printCurrent(route* myRoute, int o, int d, int w, int p)
+void printCurrent(list* _list, int* opt, int caso, int cons)
 {
 	#ifdef DEBUG
     printf("\n\n\nEnter para continuar...\n");
@@ -118,19 +120,16 @@ void printCurrent(route* myRoute, int o, int d, int w, int p)
     {
         printf("Tecla errónea...\n");
     }
-    int n = getCurrent(myRoute);
     printf("╔═══════════════════════════════════════════════════════════════════╗\n");
-    printf("║ Nodo actual: %2i        Nodo destino: %2i          Costo: %2i        ║\n", o, d, w);
-    if(p)
-    printf(ANSI_COLOR_GREEN"║ Es posible el viaje a este destino!                               ║\n"ANSI_COLOR_RESET);
+    printf("║ Caso N°%i                                                          ║\n", caso+1);
+    printf("║ El avion consume %2i                                               ║\n", cons);
+    if(opt)
+        printf("║ Optimo local: %2i y %2i                                             ║\n", opt[0], opt[1]);
     else
-    	printf(ANSI_COLOR_RED"║ Es imposible el viaje a este destino!                             ║\n"ANSI_COLOR_RESET);
+        printf("║ No hay mas optimos locales, se cambia de caso                     ║\n");
     printf("╚═══════════════════════════════════════════════════════════════════╝\n");
-    printf("┏━━ Recorriendo: \n");
-    showRoute(myRoute);
-    printf("┗━━\n");
-    printf("┏━━ Óptimo parcial: \n");
-    showRoute(optRoute);
+    printf("┏━━ Queda por consumir: \n");
+    showList(_list);
     printf("┗━━\n");
     #endif  
 }
