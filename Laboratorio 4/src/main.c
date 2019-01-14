@@ -40,8 +40,9 @@ int main(int argc, char *argv[])
 		printf("Faltan los parametros de entrada.\n");
 		return -1;
 	}
-	FILE* _file = inDirectory(argv[1]);
+	FILE* input = inDirectory(argv[1]);
 	FILE* output = openOutput(argv[2]);
+	dinamica(input, output);
 	printf("\n Saludos desde marte, terricola!\n");
 	return 0;
 }

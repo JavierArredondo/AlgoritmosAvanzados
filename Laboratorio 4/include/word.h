@@ -12,5 +12,7 @@ typedef struct word
 
 word initWord(char* input);
 word maxWord(word a, word b);
+word myConcat(word a, char b);
+void printWord(word a);
 
 # endif
